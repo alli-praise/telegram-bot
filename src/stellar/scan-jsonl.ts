@@ -123,7 +123,7 @@ export function verifyScanJsonl(text: string): VerifyScanJsonlResult {
   if (all[all.length - 1] === "") all.pop();
   if (all.length < 2) return { ok: false, reason: "missing manifest" };
 
-  const manifestLine = all[all.length - 1];
+  const manifestLine = all[all.length - 1] ?? "";
   const recordLines = all.slice(0, -1);
   let manifest: ScanJsonlManifest;
   try {
@@ -141,7 +141,7 @@ export function verifyScanJsonl(text: string): VerifyScanJsonlResult {
 
   let head = GENESIS_HASH;
   for (let i = 0; i < recordLines.length; i++) {
-    head = chainStep(head, recordLines[i]);
+    head = chainStep(head, recordLines[i] ?? "");
     if (head !== manifest.recordHashes[i]) {
       return { ok: false, reason: `record ${i} altered, reordered or missing` };
     }
