@@ -118,6 +118,7 @@ The archive persists decoded events as rotating canonical JSONL files for offlin
 - `compactArchive(dir, range, options?)`: Atomic, verified archive compaction; returns `{ retained, dropped, files, digest }`.
 - `compactScanJsonl(input, range)`: Returns the re-serialized JSONL plus `{ retained, dropped }`.
 - `validateLedgerRange(range)`: Shared inclusive-range validation.
+- `reconcileCompaction(before, after, options?)` (`src/stellar/compaction-reconciliation.ts`): Pure, deterministic comparison of the volume and latency aggregates before and after compaction. Separates range loss (ledgers lost, marked expected when outside `options.range`) from arithmetic mismatch (aggregates that differ over the ledgers present on both sides). `renderReconciliationReport(report)` renders it as byte-stable text. See [analytics-export.md](analytics-export.md#reconciling-aggregates-across-compaction).
 
 ### Event Decoder (`src/stellar/decode.ts`)
 
